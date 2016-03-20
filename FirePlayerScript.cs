@@ -94,6 +94,7 @@ public class FirePlayerScript : MonoBehaviour
         {
             if (m_trans.tag == "Dead")
                 return;
+            //子弹数目控制，如果少于0就要等待才能继续发射
             if (bulletCount > 0)
             {
                 if (shootIimer <= 0)
