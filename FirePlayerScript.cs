@@ -102,6 +102,7 @@ public class FirePlayerScript : MonoBehaviour
                     shootIimer = 0.2f;
                     control.ShootBullet(m_shoot, m_bullet);
                     Transform firebullet = Instantiate(m_bullet, m_shoot.position, m_shoot.rotation) as Transform;
+                    //设置子弹的tag，用于判断是否打中敌人
                     firebullet.tag = m_trans.tag;
                     bulletCount -= 1;
                 }
