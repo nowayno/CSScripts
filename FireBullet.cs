@@ -46,11 +46,11 @@ public class FireBullet : MonoBehaviour
     }
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.tag.CompareTo(tag == "Blue" ? "Red" : "Blude") == 0)
+        if (collider.tag.CompareTo(tag == "Blue" ? "Red" : "Blude") != 0)
         {
             Player player = collider.GetComponent<Player>();
             player.Blood -= bullet.Hurt;
-            //Instantiate(fireExp,collider.ClosestPointOnBounds(transform.position),Quaternion.identity);
+            Instantiate(fireExp,collider.ClosestPointOnBounds(transform.position),Quaternion.identity);
             Destroy(gameObject);
             if (player.Blood <= 0)
             {
