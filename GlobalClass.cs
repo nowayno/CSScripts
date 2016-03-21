@@ -52,12 +52,14 @@ namespace Assets.CSScripts
                 {
                     selectColor = true;
                     Transform f = Instantiate((GameObject)Resources.Load("Fire"), trans.position, Quaternion.identity) as Transform;
+                    bulletCount = 5;
                     f.tag = "Blue";
                 }
                 if (GUI.Button(new Rect(Screen.width / 2 + 100, Screen.height / 2, 100, 100), "红队"))
                 {
                     selectColor = true;
                     Transform f = Instantiate((GameObject)Resources.Load("Fire"), trans.position, Quaternion.identity) as Transform;
+                    bulletCount = 5;
                     f.tag = "Red";
                 }
             }

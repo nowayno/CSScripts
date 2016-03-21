@@ -27,8 +27,8 @@ public class NetControl : MonoBehaviour
             netplayer.sendSomeData("Position:" + m_trans.position.x + "," + m_trans.position.y + "," + m_trans.position.z);
             netplayer.sendSomeData("Rotation:" + m_trans.rotation.x + "," + m_trans.rotation.y);
         }
-        else {
-
+        else
+        {
             Dictionary<string, float> dic = netplayer.reciveSomeData();
             if (dic.ContainsKey("What"))
             {
