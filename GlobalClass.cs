@@ -18,6 +18,8 @@ namespace Assets.CSScripts
             NOTNET
         }
         public NETPLAYER netp;
+        private bool selectColor;
+
         public GlobalClass()
         {
             netp = NETPLAYER.NOTNET;
@@ -39,24 +41,34 @@ namespace Assets.CSScripts
         void Start()
         {
             Instanse = this;
+            selectColor = false;
         }
 
         void OnGUI()
         {
-            if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2, 100, 100), "蓝队"))
+            if (selectColor == false)
             {
-                Transform f = Instantiate((GameObject)Resources.Load("Fire"), trans.position, Quaternion.identity) as Transform;
-                f.tag = "Blue";
+                if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2, 100, 100), "蓝队"))
+                {
+                    selectColor = true;
+                    Transform f = Instantiate((GameObject)Resources.Load("Fire"), trans.position, Quaternion.identity) as Transform;
+                    f.tag = "Blue";
+                }
+                if (GUI.Button(new Rect(Screen.width / 2 + 100, Screen.height / 2, 100, 100), "红队"))
+                {
+                    selectColor = true;
+                    Transform f = Instantiate((GameObject)Resources.Load("Fire"), trans.position, Quaternion.identity) as Transform;
+                    f.tag = "Red";
+                }
             }
-            if (GUI.Button(new Rect(Screen.width / 2 + 100, Screen.height / 2, 100, 100), "红队"))
+            else
             {
-                Transform f = Instantiate((GameObject)Resources.Load("Fire"), trans.position, Quaternion.identity) as Transform;
-                f.tag = "Red";
+                selectColor = true;
+                GUI.skin.label.fontSize = 30;
+                //GUI.skin.label.fontStyle = FontStyle.Bold;
+                GUI.Label(new Rect(Screen.width / 2, 10, 100, 100), "分数:" + score);
+                GUI.Label(new Rect(10, Screen.height - 100, 170, 100), "弹容量:" + nowCount + "/" + bulletCount);
             }
-            GUI.skin.label.fontSize = 30;
-            //GUI.skin.label.fontStyle = FontStyle.Bold;
-            GUI.Label(new Rect(Screen.width / 2, 10, 100, 100), "分数:" + score);
-            GUI.Label(new Rect(10, Screen.height - 100, 170, 100), "弹容量:" + nowCount + "/" + bulletCount);
         }
 
         public void AddScore(int s)
