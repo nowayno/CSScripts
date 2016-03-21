@@ -28,6 +28,7 @@ public class NetControl : MonoBehaviour
             netplayer.sendSomeData("Rotation:" + m_trans.rotation.x + "," + m_trans.rotation.y);
         }
         else {
+
             Dictionary<string, float> dic = netplayer.reciveSomeData();
             if (dic.ContainsKey("What"))
             {
@@ -47,7 +48,9 @@ public class NetControl : MonoBehaviour
                         //ShootBullet();
                         break;
                     case 4:
-
+                        transform.tag = "Dead";
+                        break;
+                    case -1:
                         break;
                 }
             }

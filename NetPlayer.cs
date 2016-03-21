@@ -84,95 +84,48 @@ namespace Assets.CSScripts
             Dictionary<string, float> diction = new Dictionary<string, float>();
             try
             {
-                //List<float> alllist = new List<float>();
-                float p_x, p_y, p_z, r_x, r_y, r_z, mouse_y, mouse_x, shoot, dead;
                 NetworkStream ns = client.GetStream();
                 sr = new StreamReader(ns, Encoding.UTF8);
-                string data = sr.ReadLine();
-                if (data == "NULL")
+                if (client.Available > 0)
                 {
-                    diction.Add("Error", -1);
-                    return diction;
+                    string data = sr.ReadLine();
+                    if (data == "NULL")
+                    {
+                        diction.Add("Error", -1);
+                        return diction;
+                    }
+                    string[] dataSplit = data.Split(':');
+                    string one = dataSplit[0];
+                    switch (one)
+                    {
+                        case "LocalIP":
+                            diction.Add("What", 0);
+                            break;
+                        case "Position":
+                            diction.Add("What", 1);
+                            diction.Add("p_x", (float)Convert.ToDouble(dataSplit[1].Split(',')[0].Trim()));
+                            diction.Add("p_y", (float)Convert.ToDouble(dataSplit[1].Split(',')[1].Trim()));
+                            diction.Add("p_z", (float)Convert.ToDouble(dataSplit[1].Split(',')[2].Trim()));
+                            break;
+                        case "Rotation":
+                            diction.Add("What", 2);
+                            diction.Add("mouse_y", (float)Convert.ToDouble(dataSplit[1].Split('.')[0].Trim()));
+                            diction.Add("mouse_x", (float)Convert.ToDouble(dataSplit[1].Split('.')[1].Trim()));
+                            break;
+                        case "Shoot":
+                            diction.Add("What", 3);
+                            break;
+                        case "Dead":
+                            diction.Add("What", 4);
+                            break;
+                    }
                 }
-                string[] dataSplit = data.Split(':');
-                string one = dataSplit[0];
-                //if (one == "LocalIP")
-                //    diction.Add("What", 0);
-                //if (one.Contains("LocalIP"))
-                //    diction.Add("What", 0);
-                //if (one == "Position")
-                //{
-                //    diction.Add("What", 1);
-                //    diction.Add("p_x", (float)Convert.ToDouble(dataSplit[1].Split(',')[0].Trim()));
-                //    diction.Add("p_y", (float)Convert.ToDouble(dataSplit[1].Split(',')[1].Trim()));
-                //    diction.Add("p_z", (float)Convert.ToDouble(dataSplit[1].Split(',')[2].Trim()));
-                //}
-                //if (one == "Rotation")
-                //{
-                //    diction.Add("What", 2);
-                //    diction.Add("mouse_y", (float)Convert.ToDouble(dataSplit[1].Split('.')[0].Trim()));
-                //    diction.Add("mouse_x", (float)Convert.ToDouble(dataSplit[1].Split('.')[1].Trim()));
-                //}
-                switch (one)
-                {
-                    case "LocalIP":
-                        diction.Add("What", 0);
-                        break;
-                    case "Position":
-                        diction.Add("What", 1);
-                        diction.Add("p_x", (float)Convert.ToDouble(dataSplit[1].Split(',')[0].Trim()));
-                        diction.Add("p_y", (float)Convert.ToDouble(dataSplit[1].Split(',')[1].Trim()));
-                        diction.Add("p_z", (float)Convert.ToDouble(dataSplit[1].Split(',')[2].Trim()));
-                        break;
-                    case "Rotation":
-                        diction.Add("What", 2);
-                        diction.Add("mouse_y", (float)Convert.ToDouble(dataSplit[1].Split('.')[0].Trim()));
-                        diction.Add("mouse_x", (float)Convert.ToDouble(dataSplit[1].Split('.')[1].Trim()));
-                        break;
-                    case "Shoot":
-                        diction.Add("What", 3);
-                        break;
-                    case "Dead":
-                        diction.Add("What", 4);
-                        break;
-                }
-                //获取8个元素
-                //p_x = (float)Convert.ToDouble(dataSplit[1].Split(',')[0].ToString().Trim());
-                //p_y = (float)Convert.ToDouble(dataSplit[1].Split(',')[1].ToString().Trim());
-                //p_z = (float)Convert.ToDouble(dataSplit[1].Split(',')[2].ToString().Trim());
-                //r_x = (float)Convert.ToDouble(dataSplit[3].Split(',')[0].ToString().Trim());
-                //r_y = (float)Convert.ToDouble(dataSplit[3].Split(',')[1].ToString().Trim());
-                //r_z = (float)Convert.ToDouble(dataSplit[3].Split(',')[2].ToString().Trim());
-                //mouse_y = (float)Convert.ToDouble(dataSplit[5].Split('.')[0].ToString().Trim());
-                //mouse_x = (float)Convert.ToDouble(dataSplit[5].Split('.')[1].ToString().Trim());
-                //shoot = (float)Convert.ToDouble(dataSplit[7].ToString().Trim());
-                //dead = (float)Convert.ToDouble(dataSplit[9].ToString().Trim());
-                ////将8个元素保存到集合中
-                //diction.Add("p_x", p_x);
-                //diction.Add("p_y", p_y);
-                //diction.Add("p_z", p_z);
-                //diction.Add("r_x", r_x);
-                //diction.Add("r_y", r_y);
-                //diction.Add("r_z", r_z);
-                //diction.Add("mouse_y", mouse_y);
-                //diction.Add("mouse_x", mouse_x);
-                //diction.Add("shoot", shoot);
-                //diction.Add("dead", dead);
             }
             catch (Exception ex)
             {
                 diction.Add("Error", -1);
-                //diction.Add("p_x", 0);
-                //diction.Add("p_y", 0);
-                //diction.Add("p_z", 0);
-                //diction.Add("r_x", 0);
-                //diction.Add("r_y", 0);
-                //diction.Add("r_z", 0);
-                //diction.Add("mouse_y", 0);
-                //diction.Add("mouse_x", 0);
-                //diction.Add("shoot", 0);
-                //diction.Add("dead", 0);
             }
+
             return diction;
         }
         /// <summary>
